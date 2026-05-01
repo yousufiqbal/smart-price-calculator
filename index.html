@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Pricing Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 16px;
+      width: 320px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label {
+      font-size: 14px;
+      margin-top: 10px;
+      display: block;
+      color: #cbd5f5;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #0f172a;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .price {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .multiplier {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Pricing Calculator</h2>
+
+  <label>Cost (PKR)</label>
+  <input type="number" id="cost" placeholder="Enter cost" />
+
+  <label>k Value</label>
+  <input type="number" id="k" value="1000" />
+
+  <div class="result">
+    <div>Selling Price</div>
+    <div class="price" id="price">—</div>
+    <div class="multiplier" id="multiplier"></div>
+  </div>
+</div>
+
+<script>
+  const costInput = document.getElementById("cost");
+  const kInput = document.getElementById("k");
+  const priceEl = document.getElementById("price");
+  const multiplierEl = document.getElementById("multiplier");
+
+  function calculate() {
+    const C = parseFloat(costInput.value);
+    const k = parseFloat(kInput.value);
+
+    if (!C || !k) {
+      priceEl.innerText = "—";
+      multiplierEl.innerText = "";
+      return;
+    }
+
+    const multiplier = 2 + (1 / (1 + (C / k)));
+    const price = C * multiplier;
+
+    priceEl.innerText = "PKR " + price.toFixed(0);
+    multiplierEl.innerText = "Multiplier: " + multiplier.toFixed(2) + "×";
+  }
+
+  costInput.addEventListener("input", calculate);
+  kInput.addEventListener("input", calculate);
+</script>
+
+</body>
+</html>
